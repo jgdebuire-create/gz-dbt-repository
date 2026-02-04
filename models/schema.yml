@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+   - name: Raw    
+     database: wagon-test-485210
+     schema: gz_raw_data
+     loader: bigquery
+     description: test analyse for Wagon
+     tables:
+       - name: product #alias
+         identifier: raw_gz_producy
+         description: list of the product
+       - name: sales #alias
+         identifier: raw_gz_sales    
+         description: list of the sales
+       - name: ship #alias
+         identifier: raw_gz_ship
+         description: amount of shiping
+

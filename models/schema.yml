@@ -20,11 +20,11 @@ sources:
          identifier: raw_gz_sales    
          description: sales of Greenweez / we have on row per product_id found in each orders_id
          columns :
-          - name: date_date,
-          - name: orders_id,
-          - name: pdt_id,
-          - name: revenue,
-          - name: quantity
+            - name: date_date
+            - name: orders_id
+            - name: pdt_id
+            - name: revenue
+            - name: quantity
          tests : 
            - unique : 
               column_name: "(orders_id || '-' || pdt_id)" 

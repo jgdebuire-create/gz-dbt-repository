@@ -1,42 +1,79 @@
 version: 2
 
 sources:
-   - name: Raw    
-     database: wagon-test-485210
-     schema: gz_raw_data
-     loader: bigquery
-     description: test analyse for Wagon
-     tables:
-       - name: product #alias
-         identifier: raw_gz_product
-         description: list of the product of product / we have the product id and purchase price
-         columns:
+  - name: Raw
+    database: wagon-test-485210
+    schema: gz_raw_data
+    loader: bigquery
+    description: test analyse for Wagon
+    tables:
+      - name: product
+        identifier: raw_gz_product
+        description: list of the product / we have the product id and purchase price
+        columns:
           - name: products_id
-            description: Primary Keys
+            description: Primary Key
             tests:
               - unique
               - not_null
-       - name: sales #alias
-         identifier: raw_gz_sales    
-         description: sales of Greenweez / we have on row per product_id found in each orders_id
-         columns:
+
+      - name: sales
+        identifier: raw_gz_sales
+        description: sales of Greenweez / we have one row per product_id found in each orders_id
+        columns:
           - name: date_date
           - name: orders_id
           - name: pdt_id
           - name: revenue
           - name: quantity
-         tests: 
-           - unique: 
-              column_name: "(orders_id || '-' || pdt_id)" 
-              
-       - name: ship #alias  
-         identifier: raw_gz_ship
-         description: amount of shiping of Greenweez
-         columns:
+
+      - name: ship
+        identifier: raw_gz_ship
+        description: amount of shipping of Greenweez
+        columns:
           - name: orders_id
             description: Primary Key
             tests:
               - unique
-              - not_null 
-              
+              - not_null
 
+      - name: adwords
+        identifier: raw_gz_adwords
+        description: information on adwords campaign
+
+      - name: bing
+        identifier: raw_gz_bing
+        description: information on Bing campaign
+
+      - name: criteo
+        identifier: raw_gz_criteo
+        description: information on criteo campaign
+
+      - name: facebook
+        identifier: raw_gz_facebook
+        description: information on facebook campaign
+
+models:
+  - name: int_campaigns
+    description: "Ads aggregation table"
+    columns:
+     - name: campaign_key
+     - name: date_date
+       description: Primary key
+     - name: ads_cost
+       description: prix
+       tests:
+       - not_null
+    tests: 
+    - unique: 
+       column_name: "(campaign_key || '-' || date_date)"       
+    - not_null:
+       column_name: "(campaign_key || '-' || date_date)"   
+  - name: int_campaigns_day
+    description: date agregation form ads
+    columns:
+     - name: date_date
+       description: date of the campaign
+       tests: 
+       - not_null
+       

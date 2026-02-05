@@ -1,17 +1,16 @@
-with 
-
-source as (
+with source as (
 
     select * from {{ source('Raw', 'ship') }}
+
 ),
+
 renamed as (
 
     select
-        orders_id,
-        shipping_fee,
-        logcost,
-        CAST(ship_cost AS FLOAT64) AS ship_cost
-
+        source.orders_id,
+        source.shipping_fee,
+        source.logcost as log_cost,
+        safe_cast(source.ship_cost as float64) as ship_cost
 
     from source
 
